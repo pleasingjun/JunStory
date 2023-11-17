@@ -91,15 +91,15 @@
       </a-form>
     </a-modal>
 
-
+    <context-holder />
   </div>
 </template>
 <script setup>
 import {reactive, ref, watch} from "vue";
 import {ExclamationCircleOutlined,CheckOutlined,CloseCircleOutlined,MinusCircleOutlined, PlusOutlined, SettingOutlined} from '@ant-design/icons-vue'
 import { createVNode } from 'vue';
-import { Modal } from 'ant-design-vue';
-
+import { Modal ,message} from 'ant-design-vue';
+const [messageApi, contextHolder] = message.useMessage();
 
 const saveList = JSON.parse(localStorage.getItem('nameList'))
 const nameArr = reactive({list: []})
@@ -314,6 +314,7 @@ const getRandomMBTI = (arr) => {
   return arr[randomIndex];
 };
 const startDrawing = () => {
+  if(nameArr.list.length === 0) return messageApi.info('请先点击设置输入抽签内容!');
   isClick.value = false
   let speed = 10; // 初始抽签速度，100毫秒
   let counter = 0;

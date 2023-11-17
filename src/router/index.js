@@ -18,6 +18,14 @@ const routes = [
             title:"MBTI Start !"
         }
     },
+    {
+        path: '/showname',
+        name:'ShowName',
+        component: (()=>import('../pages/ShowName.vue')),
+        meta:{
+            title:"姓名抽签"
+        }
+    },
 ]
 
 const router = createRouter({

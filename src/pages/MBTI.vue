@@ -168,8 +168,6 @@ const startDrawing = () => {
   const drawWithDelay = () => {
     isShowRes.value = false;
     if (counter < 35) { // 共35次抽签，3.5秒
-      // leftMBTI.value = "E" + getRandomMBTI().substring(1);
-      // rightMBTI.value = "I" + getRandomMBTI().substring(1);
       leftMBTI.type = getRandomMBTI(Earr.list)
       rightMBTI.type = getRandomMBTI(Iarr.list)
 

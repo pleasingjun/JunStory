@@ -41,7 +41,7 @@
           v-bind="formItemLayoutWithOutLabel"
       >
         <div
-            style="height: 70vh;overflow: scroll"
+            style="height: 55vh;overflow: scroll"
         >
 
           <a-form-item
@@ -60,7 +60,7 @@
             <a-input
                 v-model:value="domain.name"
                 placeholder="请在这里输入"
-                style="width: 80%; margin: 0 10px"
+                style="width: 70%; margin: 0 10px"
             />
             <MinusCircleOutlined
                 v-if="dynamicValidateForm.domains.length > 1"
@@ -79,12 +79,12 @@
         <a-form-item v-bind="formItemLayoutWithOutLabel" style="text-align: center">
           <a-button type="primary" html-type="submit" @click="submitForm">
             <template #icon>
-              <SettingOutlined></SettingOutlined>
+              <CheckOutlined />
             </template>
             填写完成</a-button>
           <a-button style="margin-left: 10px" @click="resetForm">
             <template #icon>
-              <SettingOutlined></SettingOutlined>
+              <CloseCircleOutlined />
             </template>
             清空内容</a-button>
         </a-form-item>
@@ -96,7 +96,10 @@
 </template>
 <script setup>
 import {reactive, ref, watch} from "vue";
-import {MinusCircleOutlined, PlusOutlined, SettingOutlined} from '@ant-design/icons-vue'
+import {ExclamationCircleOutlined,CheckOutlined,CloseCircleOutlined,MinusCircleOutlined, PlusOutlined, SettingOutlined} from '@ant-design/icons-vue'
+import { createVNode } from 'vue';
+import { Modal } from 'ant-design-vue';
+
 
 const saveList = JSON.parse(localStorage.getItem('nameList'))
 const nameArr = reactive({list: []})
@@ -159,7 +162,16 @@ const submitForm = () => {
       });
 };
 const resetForm = () => {
-  formRef.value.resetFields();
+  Modal.confirm({
+    title: '确认全部清空吗?',
+    icon: createVNode(ExclamationCircleOutlined),
+    onOk() {
+          formRef.value.resetFields()
+      localStorage.removeItem('nameList')
+    },
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    onCancel() {},
+  });
 };
 const removeDomain = item => {
   const index = dynamicValidateForm.domains.indexOf(item);
